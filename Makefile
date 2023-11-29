@@ -1,8 +1,8 @@
 install:
-    bundle install
+	bundle install
 
 lint:
-    bundle exec rubocop
+	bundle exec rubocop
 
 lint-fix:
-    bundle exec rubocop -A
+	bundle exec rubocop -A
