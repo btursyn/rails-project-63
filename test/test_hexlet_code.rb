@@ -62,4 +62,28 @@ class TestHexletCode < Minitest::Test
       end
     end
   end
+
+  def test_form_with_empty_submit
+    user = User.new job: "hexlet"
+
+    form_with_empty_submit = HexletCode.form_for user do |f|
+      f.input :name
+      f.input :job
+      f.submit
+    end
+
+    assert { form_with_empty_submit == load_html_fixture("./test/fixtures/form_with_empty_submit.html") }
+  end
+
+  def test_form_with_non_empty_submit
+    user = User.new job: "hexlet"
+
+    form_with_value_submit = HexletCode.form_for user, url: "#" do |f|
+      f.input :name
+      f.input :job
+      f.submit "Wow"
+    end
+
+    assert { form_with_value_submit == load_html_fixture("./test/fixtures/form_with_value_submit.html") }
+  end
 end

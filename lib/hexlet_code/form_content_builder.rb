@@ -14,13 +14,18 @@ class FormContentBuilder
     tag_attributes = get_tag_attributes(tag_type, tag_name, options)
     object_field_value = object.public_send(tag_name)
 
-    value_attr = {}
+    value_attr = { value: "" }
     value_attr = { value: object_field_value } unless object_field_value.nil?
 
     label = get_label(tag_name)
     tag = get_tag(tag_type, tag_attributes, value_attr)
     self.output = "#{output}#{label}#{tag}"
     self
+  end
+
+  def submit(value = "Save")
+    submit_input = HexletCode::Tag.build("input", { type: "submit", value: value })
+    self.output = "#{output}#{submit_input}"
   end
 
   alias build output
@@ -32,12 +37,10 @@ class FormContentBuilder
   end
 
   def get_tag(tag_type, tag_attributes, value_attr)
-    if tag_type == "input" && value_attr.empty?
-      HexletCode::Tag.build("input", tag_attributes)
-    elsif tag_type == "input"
+    if tag_type == "input"
       tag_attributes = tag_attributes.merge value_attr
       HexletCode::Tag.build("input", tag_attributes)
-    elsif tag_type == "textarea" && value_attr.empty?
+    elsif tag_type == "textarea" && value_attr[:value] == ""
       HexletCode::Tag.build(tag_type, tag_attributes)
     else
       HexletCode::Tag.build(tag_type, tag_attributes) { value_attr[:value] }
