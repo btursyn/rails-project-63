@@ -25,7 +25,7 @@ class FormContentBuilder
   end
 
   def submit(value = 'Save')
-    submit_input = @tag_builder.build('input', { type: 'submit', value: value })
+    submit_input = @tag_builder.build('input', { type: 'submit', value: })
     self.output = "#{output}#{submit_input}"
   end
 

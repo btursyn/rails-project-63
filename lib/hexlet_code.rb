@@ -12,11 +12,11 @@ module HexletCode
 
     tag_builder = HexletCode::Tag
     form_content_builder = FormContentBuilder.new object, tag_builder
-    if !block_given?
-      HexletCode::Tag.build('form', options) { '' }
-    else
+    if block_given?
       yield(form_content_builder)
       HexletCode::Tag.build('form', options) { form_content_builder.build }
+    else
+      HexletCode::Tag.build('form', options) { '' }
     end
   end
 
