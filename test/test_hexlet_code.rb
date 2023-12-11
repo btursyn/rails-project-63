@@ -23,8 +23,7 @@ class TestHexletCode < Minitest::Test
   end
 
   def test_form_with_url_with_empty_block
-    form = HexletCode.form_for(@user, url: '/users') do |f|
-    end
+    form = HexletCode.form_for(@user, url: '/users')
     assert { form == load_html_fixture('./test/fixtures/empty_form_with_url.html') }
   end
 
