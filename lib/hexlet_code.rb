@@ -5,7 +5,7 @@ require_relative "hexlet_code/form_content_builder"
 # entry level module for gem
 module HexletCode
   class Error < StandardError; end
-  autoload(:Tag, "./lib/hexlet_code/tag.rb")
+  autoload(:Tag, File.join(__dir__, "hexlet_code/tag.rb"))
 
   def self.form_for(object, options = {})
     options = get_form_attributes options
