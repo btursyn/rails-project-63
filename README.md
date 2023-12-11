@@ -5,27 +5,30 @@
 Form Generator - is a library that facilitates the convenient creation of forms within website templates.
 
 ## Usage
-## Code sample:
 
+### Code Sample:
+
+```ruby
 User = Struct.new(:id, :name, :job)
-
 user = User.new
 
-html = HexletCode.form_for user, url: '/users' do |f|
+html = HexletCode.form_for(user, url: '/users') do |f|
   f.input :name
   f.input :job, as: :text
   f.submit
 end
 
 puts html
-# Будет выведено:
-# <form action="/users" method="post">
-#   <label for="name">Name</label>
-#   <input name="name" value="" type="text">
-#   <label for="job">Job</label>
-#   <textarea cols="20" rows="40" name="job"></textarea>
-#   <input type="submit" value="Create">
-# </form>
+
+<!-- Output -->
+<form action="/users" method="post">
+  <label for="name">Name</label>
+  <input name="name" value="" type="text">
+  <label for="job">Job</label>
+  <textarea cols="20" rows="40" name="job"></textarea>
+  <input type="submit" value="Create">
+</form>
+```
 
 ## Development
 
