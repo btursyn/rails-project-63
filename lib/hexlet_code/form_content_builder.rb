@@ -17,14 +17,19 @@ class FormContentBuilder
     value_attr = {}
     value_attr = { value: object_field_value } unless object_field_value.nil?
 
+    label = get_label(tag_name)
     tag = get_tag(tag_type, tag_attributes, value_attr)
-    self.output = "#{output}#{tag}"
+    self.output = "#{output}#{label}#{tag}"
     self
   end
 
   alias build output
 
   private
+
+  def get_label(tag_name)
+    HexletCode::Tag.build("label", { for: tag_name }) { tag_name.to_s.capitalize }
+  end
 
   def get_tag(tag_type, tag_attributes, value_attr)
     if tag_type == "input" && value_attr.empty?
