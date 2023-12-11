@@ -4,8 +4,9 @@
 class FormContentBuilder
   attr_accessor :object, :output
 
-  def initialize(object)
+  def initialize(object, tag_builder)
     @object = object
+    @tag_builder = tag_builder
     @output = ""
   end
 
@@ -24,7 +25,7 @@ class FormContentBuilder
   end
 
   def submit(value = "Save")
-    submit_input = HexletCode::Tag.build("input", { type: "submit", value: value })
+    submit_input = @tag_builder.build("input", { type: "submit", value: value })
     self.output = "#{output}#{submit_input}"
   end
 
@@ -33,17 +34,17 @@ class FormContentBuilder
   private
 
   def get_label(tag_name)
-    HexletCode::Tag.build("label", { for: tag_name }) { tag_name.to_s.capitalize }
+    @tag_builder.build("label", { for: tag_name }) { tag_name.to_s.capitalize }
   end
 
   def get_tag(tag_type, tag_attributes, value_attr)
     if tag_type == "input"
       tag_attributes = tag_attributes.merge value_attr
-      HexletCode::Tag.build("input", tag_attributes)
+      @tag_builder.build("input", tag_attributes)
     elsif tag_type == "textarea" && value_attr[:value] == ""
-      HexletCode::Tag.build(tag_type, tag_attributes)
+      @tag_builder.build(tag_type, tag_attributes)
     else
-      HexletCode::Tag.build(tag_type, tag_attributes) { value_attr[:value] }
+      @tag_builder.build(tag_type, tag_attributes) { value_attr[:value] }
     end
   end
 

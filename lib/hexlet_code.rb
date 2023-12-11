@@ -10,7 +10,8 @@ module HexletCode
   def self.form_for(object, options = {})
     options = get_form_attributes options
 
-    form_content_builder = FormContentBuilder.new object
+    tag_builder = HexletCode::Tag
+    form_content_builder = FormContentBuilder.new object, tag_builder
     if !block_given?
       HexletCode::Tag.build("form", options) { "" }
     else
