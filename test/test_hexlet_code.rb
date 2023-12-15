@@ -14,7 +14,7 @@ class TestHexletCode < Minitest::Test
   end
 
   def setup
-    @user = User.new name: 'rob', job: 'hexlet', gender: 'm'
+    @user = User.new(name: 'rob', job: 'hexlet', gender: 'm')
   end
 
   def test_empty_form_with_empty_block

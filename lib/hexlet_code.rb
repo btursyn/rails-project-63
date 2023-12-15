@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
-require_relative 'hexlet_code/version'
-require_relative 'hexlet_code/form_content_builder'
 # entry level module for gem
 module HexletCode
   class Error < StandardError; end
-  autoload(:Tag, File.join(__dir__, 'hexlet_code/tag.rb'))
+  autoload(:Tag, 'hexlet_code/tag.rb')
+  autoload :Version, 'hexlet_code/version'
+  autoload :FormContentBuilder, 'hexlet_code/form_content_builder'
 
   def self.form_for(object, options = {})
     options = get_form_attributes options
 
     tag_builder = HexletCode::Tag
-    form_content_builder = FormContentBuilder.new object, tag_builder
+    form_content_builder = HexletCode::FormContentBuilder.new(object, tag_builder)
     if block_given?
       yield(form_content_builder)
       HexletCode::Tag.build('form', options) { form_content_builder.build }
