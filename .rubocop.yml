@@ -1,5 +1,11 @@
 AllCops:
-  TargetRubyVersion: 3.2
+  Exclude:
+    - "**/vendor/**/*"
+    - "**/*.gemspec"
+    - "spec/**"
+  NewCops: enable
+  TargetRubyVersion: 3.2.2
+  SuggestExtensions: false
 
 Style/StringLiterals:
   Enabled: true

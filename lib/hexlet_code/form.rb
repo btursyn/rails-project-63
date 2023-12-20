@@ -3,11 +3,11 @@
 module HexletCode
   # module for generating html forms
   module Form
-    def self.build(attributes = {}, &block)
+    def self.build(attributes = {}, &)
       attributes = get_form_attributes attributes
 
       if block_given?
-        Tag.build('form', attributes, &block)
+        Tag.build('form', attributes, &)
       else
         Tag.build('form', attributes) { '' }
       end
