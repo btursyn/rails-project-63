@@ -7,7 +7,6 @@ module HexletCode
       def initialize(input)
         super(input)
         attributes = { cols: '20', rows: '40' }.merge(@input[:attributes])
-        @input[:value_stored_as_attribute?] = false
         @input[:attributes] = { name: @input[:name] }.merge(attributes)
       end
     end

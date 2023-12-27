@@ -17,9 +17,9 @@ module HexletCode
 
     def self.input(input)
       if input[:type] == 'string'
-        Inputs::StringInput.new(input)
+        Inputs::StringInput.new input
       else
-        Inputs::TextInput.new(input)
+        Inputs::TextInput.new input
       end
     end
 
@@ -27,7 +27,7 @@ module HexletCode
     module HTML
       def self.tag(input)
         html_tag = input[:type] == 'string' ? 'input' : 'textarea'
-        if input[:value_stored_as_attribute?]
+        if html_tag == 'input'
           Tag.build(html_tag, input[:attributes].merge({ value: input[:value] }))
         else
           Tag.build(html_tag, input[:attributes]) { input[:value] }
