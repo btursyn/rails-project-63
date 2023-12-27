@@ -4,25 +4,42 @@ module HexletCode
   # module for rendering form
   module FormRender
     def self.render_html(form)
-      Form.build(form.attributes) do
-        inner_tags = ''
-        form.inner_tags.each do |tag_model|
-          inner_tags = "#{inner_tags}#{HTML.tag tag_model}"
+      Form.build(form[:form_options]) do
+        inputs = ''
+        form[:inputs].each do |element|
+          input_obj = input element
+          inputs = "#{inputs}#{HTML.label input_obj}#{HTML.tag input_obj.input}"
         end
-        inner_tags
+        inputs = "#{inputs}#{HTML.submit(form[:submit])}" unless form[:submit].nil?
+        inputs
+      end
+    end
+
+    def self.input(input)
+      if input[:type] == 'string'
+        Inputs::StringInput.new(input)
+      else
+        Inputs::TextInput.new(input)
       end
     end
 
     # HTML specific methods for rendering
     module HTML
-      def self.tag(tag_model)
-        if tag_model.contented
-          Tag.build(tag_model.type, tag_model.attributes) { tag_model.value }
-        elsif tag_model.value.nil?
-          Tag.build(tag_model.type, tag_model.attributes)
+      def self.tag(input)
+        html_tag = input[:type] == 'string' ? 'input' : 'textarea'
+        if input[:value_stored_as_attribute?]
+          Tag.build(html_tag, input[:attributes].merge({ value: input[:value] }))
         else
-          Tag.build(tag_model.type, tag_model.attributes.merge({ value: tag_model.value }))
+          Tag.build(html_tag, input[:attributes]) { input[:value] }
         end
+      end
+
+      def self.label(input_obj)
+        Tag.build('label', { for: input_obj.input[:name] }) { input_obj.label }
+      end
+
+      def self.submit(attributes)
+        Tag.build('input', { type: 'submit' }.merge(attributes))
       end
     end
   end

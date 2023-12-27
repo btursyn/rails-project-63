@@ -19,10 +19,10 @@ module HexletCode
       def get_form_attributes(attributes)
         if attributes.key?(:url)
           attributes[:action] = attributes[:url]
-          attributes.delete(:url)
+          attributes = attributes.except(:url)
         end
 
-        default_form_attributes = { action: '#', method: 'post' }
+        default_form_attributes = { action: '#' }
         (default_form_attributes.keys - attributes.keys).each do |item|
           attributes[item] = default_form_attributes[item]
         end
