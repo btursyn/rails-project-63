@@ -6,4 +6,3 @@ Bundler.require
 require 'hexlet_code'
 require 'nokogiri'
 require 'minitest/autorun'
-require 'active_support/core_ext/string/inflections'

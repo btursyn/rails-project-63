@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'bundler/setup'
 require 'active_support/core_ext/string/inflections'
 
 # entry level module for gem
