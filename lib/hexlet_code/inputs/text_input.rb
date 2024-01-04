@@ -4,7 +4,7 @@ module HexletCode
   module Inputs
     # class for text inputs
     class TextInput < BaseInput
-      DEFAULT_ATTRIBUTES = { cols: '20', rows: '40' }
+      DEFAULT_ATTRIBUTES = { cols: '20', rows: '40' }.freeze
 
       def initialize(input)
         super(input)

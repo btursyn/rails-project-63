@@ -17,7 +17,7 @@ module HexletCode
     end
 
     def self.build_input(input)
-      input_obj = "HexletCode::Inputs::#{input[:type].capitalize}Input".constantize().new input
+      input_obj = "HexletCode::Inputs::#{input[:type].capitalize}Input".constantize.new input
       "#{input_obj.label}#{input_obj.tag}"
     end
   end

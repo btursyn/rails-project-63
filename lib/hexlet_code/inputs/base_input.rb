@@ -11,7 +11,7 @@ module HexletCode
         @label = input[:label]
       end
 
-      def label()
+      def label
         Tag.build('label', { for: @input[:name] }) { @label }
       end
     end
