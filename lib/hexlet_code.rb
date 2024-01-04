@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'active_support/core_ext/string/inflections'
+
 # entry level module for gem
 module HexletCode
   class Error < StandardError; end

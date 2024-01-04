@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'active_support/core_ext/string/inflections'
-
 module HexletCode
   # module for rendering form
   module FormRender
