@@ -1,46 +1,24 @@
 # frozen_string_literal: true
 
+require 'active_support/core_ext/string/inflections'
+
 module HexletCode
   # module for rendering form
   module FormRender
     def self.render_html(form)
-      Form.build(form[:form_options]) do
-        inputs = ''
-        form[:inputs].each do |element|
-          input_obj = input element
-          inputs = "#{inputs}#{HTML.label input_obj}#{HTML.tag input_obj.input}"
+      Tag.build('form', form[:form_options]) do
+        inputs = form[:inputs].map { |input| build_input(input) }
+        if form[:submit]
+          submit_tag = Tag.build('input', { type: 'submit' }.merge(form[:submit]))
+          inputs.push(submit_tag)
         end
-        inputs = "#{inputs}#{HTML.submit(form[:submit])}" unless form[:submit].nil?
-        inputs
+        inputs.join
       end
     end
 
-    def self.input(input)
-      if input[:type] == 'string'
-        Inputs::StringInput.new input
-      else
-        Inputs::TextInput.new input
-      end
-    end
-
-    # HTML specific methods for rendering
-    module HTML
-      def self.tag(input)
-        html_tag = input[:type] == 'string' ? 'input' : 'textarea'
-        if html_tag == 'input'
-          Tag.build(html_tag, input[:attributes].merge({ value: input[:value] }))
-        else
-          Tag.build(html_tag, input[:attributes]) { input[:value] }
-        end
-      end
-
-      def self.label(input_obj)
-        Tag.build('label', { for: input_obj.input[:name] }) { input_obj.label }
-      end
-
-      def self.submit(attributes)
-        Tag.build('input', { type: 'submit' }.merge(attributes))
-      end
+    def self.build_input(input)
+      input_obj = "HexletCode::Inputs::#{input[:type].capitalize}Input".constantize().new input
+      "#{input_obj.label}#{input_obj.tag}"
     end
   end
 end

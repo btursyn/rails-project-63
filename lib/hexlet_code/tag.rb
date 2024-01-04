@@ -3,13 +3,20 @@
 module HexletCode
   # module for generating html tags
   module Tag
+    SINGLE_TAGS = %w[img br input]
+
     def self.build(tag_name, attributes)
-      result_attributes = attributes.reduce('') do |acc, (key, value)|
-        acc + "#{key}=\"#{value}\" "
-      end
-      tag = "<#{tag_name} #{result_attributes.chop}>"
-      tag = "#{tag}#{yield}</#{tag_name}>" if block_given?
-      tag
+      tag = "<#{tag_name}#{build_attributes(attributes)}>"
+      return tag if SINGLE_TAGS.include?(tag_name)
+      
+      "#{tag}#{yield}</#{tag_name}>"
+    end
+
+    def self.build_attributes(attributes)
+      return '' if attributes.empty?
+    
+      build_attributes = attributes.map { |key, value| "#{key}=\"#{value}\"" }.join(' ')
+      [' ', build_attributes].join
     end
   end
 end

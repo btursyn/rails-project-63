@@ -7,10 +7,11 @@ module HexletCode
 
     def initialize(object, attributes = {})
       @object = object
+      attributes[:action] = attributes.fetch(:url, '#')
       @form = {
         inputs: [],
         submit: nil,
-        form_options: { method: 'post' }.merge(attributes)
+        form_options: { method: 'post' }.merge(attributes.except(:url))
       }
     end
 

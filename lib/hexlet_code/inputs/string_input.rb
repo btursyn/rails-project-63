@@ -4,10 +4,16 @@ module HexletCode
   module Inputs
     # class for string inputs
     class StringInput < BaseInput
+      DEFAULT_ATTRIBUTES = { type: 'text' }
+
       def initialize(input)
         super(input)
-        attributes = { type: 'text' }.merge(@input[:attributes])
+        attributes = DEFAULT_ATTRIBUTES.merge(@input[:attributes])
         @input[:attributes] = { name: @input[:name] }.merge(attributes)
+      end
+
+      def tag
+        Tag.build('input', @input[:attributes].merge({ value: @input[:value] }))
       end
     end
   end
