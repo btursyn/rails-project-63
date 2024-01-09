@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'bundler/setup'
 require 'active_support/core_ext/string/inflections'
 
 # entry level module for gem
@@ -11,13 +10,7 @@ module HexletCode
   autoload :Version, 'hexlet_code/version'
   autoload :FormBuilder, 'hexlet_code/form_builder'
   autoload :FormRender, 'hexlet_code/form_render'
-
-  # module for inputs
-  module Inputs
-    autoload :BaseInput, 'hexlet_code/inputs/base_input'
-    autoload :StringInput, 'hexlet_code/inputs/string_input'
-    autoload :TextInput, 'hexlet_code/inputs/text_input'
-  end
+  autoload :Inputs, 'hexlet_code/inputs.rb'
 
   def self.form_for(object, options = {})
     form_builder = FormBuilder.new(object, options)

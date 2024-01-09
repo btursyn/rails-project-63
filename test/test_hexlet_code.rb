@@ -2,10 +2,6 @@
 
 require 'test_helper'
 
-def load_html_fixture(file_path)
-  File.open(file_path) { |f| Nokogiri::HTML.fragment(f.read) }.to_s.tr("\n\r", '')
-end
-
 class TestHexletCode < Minitest::Test
   User = Struct.new(:name, :job, :gender, keyword_init: true)
 
@@ -15,16 +11,24 @@ class TestHexletCode < Minitest::Test
 
   def setup
     @user = User.new(name: 'rob', job: 'hexlet', gender: 'm')
+
+    @html_form_for_empty_block = load_html_fixture('empty_block.html')
+    @html_form_with_url_with_empty_block = load_html_fixture('empty_form_with_url.html')
+    @html_form_field_generation = load_html_fixture('form_with_generated_fields.html')
+    @html_form_fields_with_additional_attributes = load_html_fixture('form_fields_with_additonal_attributes.html')
+    @html_form_with_override_def_field_attributes = load_html_fixture('form_with_override_def_field_attributes.html')
+    @html_form_with_empty_submit = load_html_fixture('form_with_empty_submit.html')
+    @html_form_with_value_submit = load_html_fixture('form_with_value_submit.html')
   end
 
   def test_empty_form_with_empty_block
     form = HexletCode.form_for(@user)
-    assert { form == load_html_fixture('./test/fixtures/empty_block.html') }
+    assert { form == @html_form_for_empty_block }
   end
 
   def test_form_with_url_with_empty_block
     form = HexletCode.form_for(@user, url: '/users')
-    assert { form == load_html_fixture('./test/fixtures/empty_form_with_url.html') }
+    assert { form == @html_form_with_url_with_empty_block }
   end
 
   def test_form_field_generation
@@ -33,7 +37,7 @@ class TestHexletCode < Minitest::Test
       f.input :job, as: :text
     end
 
-    assert { form == load_html_fixture('./test/fixtures/form_with_generated_fields.html') }
+    assert { form == @html_form_field_generation }
   end
 
   def test_form_fields_with_additional_attributes
@@ -42,7 +46,7 @@ class TestHexletCode < Minitest::Test
       f.input :job
     end
 
-    assert { form == load_html_fixture('./test/fixtures/form_fields_with_additonal_attributes.html') }
+    assert { form == @html_form_fields_with_additional_attributes }
   end
 
   def test_override_field_attribute
@@ -50,7 +54,7 @@ class TestHexletCode < Minitest::Test
       f.input :job, as: :text, rows: 50, cols: 50
     end
 
-    assert { form == load_html_fixture('./test/fixtures/form_with_override_def_field_attributes.html') }
+    assert { form == @html_form_with_override_def_field_attributes }
   end
 
   def test_raise_exception
@@ -71,7 +75,7 @@ class TestHexletCode < Minitest::Test
       f.submit
     end
 
-    assert { form_with_empty_submit == load_html_fixture('./test/fixtures/form_with_empty_submit.html') }
+    assert { form_with_empty_submit == @html_form_with_empty_submit }
   end
 
   def test_form_with_non_empty_submit
@@ -83,6 +87,6 @@ class TestHexletCode < Minitest::Test
       f.submit 'Wow'
     end
 
-    assert { form_with_value_submit == load_html_fixture('./test/fixtures/form_with_value_submit.html') }
+    assert { form_with_value_submit == @html_form_with_value_submit }
   end
 end
