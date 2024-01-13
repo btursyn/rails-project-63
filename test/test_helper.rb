@@ -6,6 +6,5 @@ require 'minitest/autorun'
 require 'minitest-power_assert'
 
 def load_html_fixture(file_name)
-  html = File.read "#{File.dirname(__FILE__)}/fixtures/#{file_name}"
-  html.gsub(/\n|\s{4}/, '')
+  File.read "#{File.dirname(__FILE__)}/fixtures/#{file_name}"
 end
