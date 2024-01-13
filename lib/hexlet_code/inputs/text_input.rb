@@ -4,13 +4,20 @@ module HexletCode
   module Inputs
     # class for text inputs
     class TextInput < BaseInput
-      DEFAULT_ROWS = { rows: '40' }.freeze
-      DEFAULT_COLS = { cols: '20' }.freeze
+      DEFAULT_COLS = 20
+      DEFAULT_ROWS = 40
+
       def initialize(input)
         super(input)
-        default_attributes = DEFAULT_COLS.merge DEFAULT_ROWS
-        attributes = default_attributes.merge(@input[:attributes])
-        @input[:attributes] = { name: @input[:name] }.merge(attributes)
+
+        attributes =
+          {
+            name: @input[:name],
+            cols: DEFAULT_COLS,
+            rows: DEFAULT_ROWS
+          }
+
+        @input[:attributes] = attributes.merge(@input[:attributes])
       end
 
       def tag

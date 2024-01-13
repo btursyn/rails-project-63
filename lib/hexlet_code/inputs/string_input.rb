@@ -6,7 +6,9 @@ module HexletCode
     class StringInput < BaseInput
       def initialize(input)
         super(input)
+
         attributes = { type: 'text' }.merge(@input[:attributes])
+
         @input[:attributes] = { name: @input[:name] }.merge(attributes)
       end
 
